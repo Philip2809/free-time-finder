@@ -1,0 +1,25 @@
+.calendar-holder {
+  height: 100vh;
+}
+
+:root {
+  background-color: #424242;
+}
+
+.settings {
+  display: flex;
+  margin-left: 5rem;
+  color: white;
+}
+
+.test {
+  color: white;
+}
+
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100000;
+}
