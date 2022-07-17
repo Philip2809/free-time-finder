@@ -16,7 +16,7 @@
     "@types/react-big-calendar": "^0.38.0",
     "@types/uuid": "^8.3.4",
     "axios": "^0.27.2",
-    "kalend": "^0.14.12",
+    "kalend": "^0.14.17",
     "luxon": "^2.4.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",

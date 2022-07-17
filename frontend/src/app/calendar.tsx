@@ -1,4 +1,4 @@
-import { Button, Modal, Box, Typography, Chip } from "@mui/material";
+import { Button, Modal, Box, Typography, Chip, Snackbar, Alert } from "@mui/material";
 import axios from "axios";
 import Kalend, { CalendarView, CALENDAR_VIEW, OnPageChangeData, OnSelectViewData } from "kalend";
 import 'kalend/dist/styles/index.css';
@@ -30,7 +30,7 @@ function getRandomInt(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-const colorFactor = getRandomInt(23523453, 47853798758);
+const colorFactor = getRandomInt(235234, 4785379875438);
 
 function formatEvents(eventData: EventsData): Event[] { // thanks to quicktype this is typed
   const events: Event[] = [];
@@ -126,6 +126,10 @@ const Calendar = (props: props) => {
           }
           if (typeof res !== "string") weeks.push({ data: res, original: startEnd[i] });
         } else weeks.push({ data: e, original: startEnd[i] });
+        console.log(res);
+        if (res[0].messages.length) {
+          setApiMessage(res[0].messages[0].message);
+        } else setApiMessage('')
       });
 
       props.spinner(false);
@@ -162,9 +166,10 @@ const Calendar = (props: props) => {
     
     const date = new Date(data.startAt).toLocaleString('se-SV', { year: 'numeric', month: '2-digit', day: '2-digit' })
     const timeoptions: any = { hour: 'numeric', minute: 'numeric' };
-    const time = `${new Date(data.startAt).toLocaleString('se-SV', timeoptions)}-${new Date(data.endAt).toLocaleString('se-SV', timeoptions)}`;
+    const time = `${new Date(data.startAt).toLocaleString('se-SV', timeoptions).replace(/AM|PM| /g,'')}-${new Date(data.endAt).toLocaleString('se-SV', timeoptions).replace(/AM|PM| /g,'')}`;
     setModalInfo({
       title: data.fullEvent.title,
+      teacher: data.summary,
       date,
       time,
       carType: data.fullEvent.educationTypesResourceTypes[0]?.displayName ?? 'Not specified',
@@ -174,14 +179,17 @@ const Calendar = (props: props) => {
 
   const [modalInfo, setModalInfo] = useState({
     title: '',
+    teacher: '',
     date: '',
     time: '',
     carType: '',
   });
 
-  const [open, setOpen] = useState(false);
-  const openModal = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [openModalBool, setOpenModalBool] = useState(false);
+  const openModal = () => setOpenModalBool(true);
+  const handleClose = () => setOpenModalBool(false);
+  
+  const [apiMessage, setApiMessage] = useState('');
 
 
   const style = {
@@ -229,7 +237,7 @@ const Calendar = (props: props) => {
 
       <div>
         <Modal
-          open={open}
+          open={openModalBool}
           onClose={handleClose}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
@@ -237,6 +245,8 @@ const Calendar = (props: props) => {
           <Box style={style}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
               {modalInfo.title}
+              <br />
+              {modalInfo.teacher}
               <br />
               <Chip label={modalInfo.date} color="success"  sx={{ mr: 1 }} />
               <Chip label={modalInfo.time} color="success"  sx={{ mr: 1 }}/>
@@ -247,7 +257,15 @@ const Calendar = (props: props) => {
             </Typography>
           </Box>
         </Modal>
-      </div></>
+      </div>
+
+      <Snackbar open={apiMessage !== ''} autoHideDuration={6000}>
+        <Alert severity="info" sx={{ width: '100%' }}>
+          {apiMessage}
+        </Alert>
+      </Snackbar>
+      
+      </>
   )
 }
 
