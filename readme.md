@@ -10,7 +10,7 @@
 
 
 
-# Howto develop
+# How to develop
 (notes for myself so I will remember in 40 years)
 * Write the frontend code you want in the frontend folder
 * Write the backend code you need the backend folder, to send requests etc (cause CORS)
