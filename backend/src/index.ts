@@ -21,6 +21,15 @@ app.post('/api/getLessons/:authcookie', async (req: Request, res: Response) => {
   res.send(bookingResponse.data);
 });
 
+app.get('/check-cookie/:authcookie', async (req: Request, res: Response) => {
+  const authcookie = req.params.authcookie;
+  const headers = {
+    Cookie: `.SCFORMSAUTH=${authcookie}`
+  }
+  const bookingResponse = await axios.get('https://elevcentralen.se/en/Booking', { headers });
+  res.send(bookingResponse.data);
+});
+
 app.use('/', express.static('frontend-build'));
 
 app.listen(port, () => {

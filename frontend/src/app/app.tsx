@@ -2,6 +2,8 @@ import { CircularProgress } from "@mui/material";
 import { useState } from "react";
 import { Event } from "../utils/interfaces";
 import Calendar from "./calendar";
+import FirstTime from "./pages/first-time";
+import Home from "./pages/home";
 import Settings from "./settings";
 import './style.css'
 
@@ -17,7 +19,8 @@ const App = () => {
 
   return (
     <div>
-      {settingsData ? (
+      <FirstTime />
+      {/* {settingsData ? (
 
           <>
             { spinner && <div className='spinner'>
@@ -28,7 +31,7 @@ const App = () => {
           </>
 
         
-        ) : <Settings setSettingsData={setSettingsData}/>}
+        ) : <Home setSettingsData={setSettingsData}/>} */}
     </div>
   )
 }

@@ -3,7 +3,8 @@
 }
 
 :root {
-  background-color: #424242;
+  /* background-color: #424242; */
+  overflow-y: scroll;
 }
 
 .settings {
