@@ -1,14 +1,19 @@
 import { TextField } from '@mui/material';
 import { BaseSyntheticEvent, useState } from 'react';
 import FaqQuestion from '../../components/faq-question';
+import { LoginCardData, Teacher } from '../../helpers/interfaces';
 import { checkAuthCookie } from '../../helpers/utilities';
 import styles from './first-time.module.scss';
+
+interface props {
+  done: () => void;
+}
 
 const sx = {
   '&': { width: '100%' }
 }
 
-const FirstTime = () => {
+const FirstTime = (props: props) => {
 
   const handleOnInput = async (e: BaseSyntheticEvent) => {
     const input = e.target.value as string;
@@ -25,13 +30,27 @@ const FirstTime = () => {
       const parser = new DOMParser();
       const doc = parser.parseFromString(res, "text/html");
       const teacherElements = doc.getElementsByClassName('list-group-item list-group-item-sm');
-      const teachers = Array.from(teacherElements).map(e => {
-        return { 
-          name: e.getAttribute('data-name'),  
-          id: e.getAttribute('data-id'),  
-        }
+      const teachers: Teacher[] = [];
+      Array.from(teacherElements).forEach(e => {
+        const name = e.getAttribute('data-name');
+        const id = e.getAttribute('data-id');
+        if (!(!name || !id)) teachers.push({ name, id: +id });
       });
-      console.log(teachers);
+      const regex = res.match(/(\$\.sc\.person\.id)([ ]?=[ ]?)([0-9]+)(;)/);
+      if (regex) {
+        const personId = +regex[3];
+        console.log(personId);
+        const myFirstCard: LoginCardData = {
+          name: 'Profil 1',
+          personid: personId,
+          teacherids: [],
+          auth: input,
+          teachers,
+        }
+        
+        localStorage.setItem('logincards', JSON.stringify([myFirstCard]));
+        props.done();
+      }
     }
   }
 
@@ -46,7 +65,7 @@ const FirstTime = () => {
       </div>
 
       <div className={styles.introBox}>
-        Det verkar som att detta är första gången du är på sidan eller kanske du har rensat dina kakor? Oavsätt fall vi "omkonfigrera"
+        Det verkar som att detta är första gången du är på sidan eller kanske du har rensat dina kakor? Oavsätt fall, behöver vi "omkonfigrera"
         och till detta behövs att du loggar in på elevcentalen och och klistrar in ".SCFORMSAUTH" kakan nedanför.
       </div>
 
@@ -60,7 +79,7 @@ const FirstTime = () => {
        <br />
         <FaqQuestion 
           question='Vad gör Free Time Finder?'
-          answer='Free Time Finder gör det lättare att hitta lediga körlektionstider som man annars hade behövt boka genom Elevcentalen. 
+          answer='Free Time Finder gör det lättare att hitta lediga körlektionstider som man annars hade behövt hitta genom Elevcentalen. 
           Elevcentalens system är mycket dålig, då man endast kan se en lärare åt gången samt endast en mycket begränsad veckovy. 
           OSB! Free Time Finder är endast gjort för att hitta en ledig tid, du måste själv gå in på elevcentalen för att boka den!'/>
 
