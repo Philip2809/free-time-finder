@@ -41,6 +41,7 @@ const FirstTime = (props: props) => {
         const personId = +regex[3];
         console.log(personId);
         const myFirstCard: LoginCardData = {
+          key: 0,
           name: 'Profil 1',
           personid: personId,
           teacherids: [],
@@ -70,7 +71,16 @@ const FirstTime = (props: props) => {
       </div>
 
       <div className={styles.introBox}>
-        <TextField id="outlined-basic" label=".SCFORMSAUTH" error={inputError} variant="outlined" disabled={inputDisabled} autoComplete='off' sx={sx} onInput={handleOnInput} />
+        <TextField 
+          id="outlined-basic"
+          label=".SCFORMSAUTH"
+          helperText={inputError ? 'Vänligen ange en giltig SCFORMSAUTH, läs "vanliga frågor" nedanför för att hitta hur man gör!' : ''}
+          error={inputError}
+          variant="outlined"
+          disabled={inputDisabled}
+          autoComplete='off'
+          sx={sx}
+          onInput={handleOnInput} />
       </div>
 
       <div className={styles.introBox} id={styles.faq}>

@@ -6,3 +6,18 @@
 .editbtn:hover {
   color: red;
 }
+
+.chip {
+  margin: 0.3rem;
+}
+
+.topChips {
+  display: flex;
+  justify-content: center;
+}
+
+.teacherChips {
+  max-height: 250px;
+  overflow-y: auto;
+}
+

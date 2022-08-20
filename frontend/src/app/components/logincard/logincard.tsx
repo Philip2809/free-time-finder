@@ -1,4 +1,4 @@
-import { Card, CardActionArea, CardMedia, CardContent, Typography } from "@mui/material";
+import { Card, CardActionArea, CardContent, Typography, Chip } from "@mui/material";
 import { useEffect, useState } from "react";
 import { MdEdit } from 'react-icons/md';
 import { LoginCardData } from "../../helpers/interfaces";
@@ -14,13 +14,21 @@ interface props {
 }
 
 const sx = {
-  '&': { boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px', maxWidth: 345, margin: '0.5%' },
+  '&': { boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px', width: '40%', margin: '0.5%' },
 }
+
+let timer = 0;
 
 const LoginCard = (props: props) => {
 
-  const cardclick = () => {
-    props.handleCardClick(props.card);
+  const cardmousedown = () => {
+    timer = setTimeout(() => {
+      props.handleCardClick(props.card);
+    }, 450);
+  }
+
+  const cardmouseup = () => {
+    clearTimeout(timer);
   }
 
   const editclick = () => {
@@ -28,28 +36,39 @@ const LoginCard = (props: props) => {
   }
 
   return (
-      <Card sx={sx} onClick={cardclick}>
+      <Card sx={sx} onMouseDown={cardmousedown} onMouseUp={cardmouseup}>
       <CardActionArea>
         <CardContent>
           <Typography gutterBottom variant="h5" component="div" sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <span>{ props.addCard ? props.addCardTitle : props.card.name }</span> { props.addCard ? null : <MdEdit className={styles.editbtn} onClick={editclick} /> }
           </Typography>
-          <Typography variant="body2" color="text.secondary">
 
             { 
               props.addCard ? (<>{props.addCardText}</>) : 
               
                 (<>
               
-                  <span>Personid: {props.card.personid}</span>
-                  <br />
-                  Teachers: {props.card.teacherids}
+                  <div className={styles.topChips}>
+                    <Chip color='primary' label={props.card.personid} className={styles.chip} />
+                  </div>
+
+                  <div className={styles.teacherChips}>
+                    { props.card.teacherids.map((n) => {
+                      const teacher = props.card.teachers.find(e => e.id === n);
+                      return <Chip 
+                                key={n}
+                                color='error'
+                                label={teacher?.name}
+                                className={styles.chip} />;
+                    }) }
+                  </div>
+
+                  
 
                 </>)
             }
 
 
-          </Typography>
         </CardContent>
       </CardActionArea>
     </Card>

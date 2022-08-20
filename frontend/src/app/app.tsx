@@ -1,5 +1,5 @@
 import { CircularProgress } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Event } from "../utils/interfaces";
 import Calendar from "./calendar";
 import { LoginCardData } from "./helpers/interfaces";
@@ -26,9 +26,14 @@ const App = () => {
     setFirstTime('no');
   }
 
+  useEffect(() => {
+    console.log('logincards', logincards);
+    localStorage.setItem('logincards', JSON.stringify(logincards));
+  } , [logincards]);
+
   return (
     <div>
-      { firstTime === 'yes' ? (<FirstTime done={done} />) : (<Home logincards={logincards} setLogincard={setLogincard} />) }
+      { firstTime === 'yes' ? (<FirstTime done={done} />) : (<Home logincards={logincards} setLogincard={setLogincard} setLogincards={setLogincards} />) }
     </div>
   )
 }
