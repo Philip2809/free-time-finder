@@ -1,4 +1,4 @@
-import { Item } from "./generatedInterfaces";
+import { Item } from "../app/helpers/generatedInterfaces";
 
 
 export interface Event {

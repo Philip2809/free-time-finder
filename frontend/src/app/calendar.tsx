@@ -3,7 +3,7 @@ import axios from "axios";
 import Kalend, { CalendarView, CALENDAR_VIEW, OnPageChangeData, OnSelectViewData } from "kalend";
 import 'kalend/dist/styles/index.css';
 import { useState } from "react";
-import { EventsData } from "../utils/generatedInterfaces";
+import { EventsData } from "./helpers/generatedInterfaces";
 import { Event, ReqData } from "../utils/interfaces";
 
 interface props {

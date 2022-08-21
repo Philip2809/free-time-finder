@@ -1,5 +1,6 @@
 import axios from "axios";
-import { Teacher } from "./interfaces";
+import { Employee, EventsData, Item } from "./generatedInterfaces";
+import { LoginCardData, Teacher, TeacherGroup } from "./interfaces";
 
 export function checkAuthCookie(cookie: string) {
   return new Promise<boolean | string>((resolve) => {
@@ -7,6 +8,21 @@ export function checkAuthCookie(cookie: string) {
       if (/(\$\.sc\.person\.id)([ ]?=[ ]?)([0-9]+;)/.test(res.data)) resolve(res.data);
       else resolve(false);
     });
+  });
+}
+
+export function getLessons(card: LoginCardData, start: number, end: number) {
+  return new Promise<EventsData>((resolve) => {
+    const url = 'http://localhost:5000/lessons'
+      + '?auth=' + card.auth
+      + '&personId=' + card.personid
+      + '&start=' + start
+      + '&end=' + end
+      + '&teachers=' + card.teacherids.join(',');
+
+      axios.get(url).then(res => {
+        resolve(res.data);
+      });
   });
 }
 
@@ -34,3 +50,28 @@ export function randint(min: number, max: number) {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+export function getGroupings(lessons: Item[]) {
+  const gorupings: TeacherGroup[] = [];
+  lessons.forEach(lesson => {
+    const teacher = lesson.employees[0];
+    if (!teacher) return;
+    const group = gorupings.find(g => g.id === teacher.id);
+    if (!group) {
+      gorupings.push({ 
+        text: teacher.name,
+        id: teacher.id,
+        color: getColorBasedOnTeacher(teacher),
+      });
+    }
+  });
+  return gorupings;
+}
+
+function decimalToRgbString(d: number) {
+  return "#" + ((d) >>> 0).toString(16).slice(-6);
+}
+
+function getColorBasedOnTeacher(teacher: Employee) {
+  return decimalToRgbString(teacher.id * randint(235234, 4785379875438) * parseInt((teacher.signature[0] || 'A'), 36));
+} 

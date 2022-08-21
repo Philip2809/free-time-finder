@@ -31,17 +31,14 @@ const App = () => {
     localStorage.setItem('logincards', JSON.stringify(logincards));
   } , [logincards]);
 
-  // const test = () => {
-  //   { logincard ? ( <h1>hej</h1> ) : (<Home logincards={logincards} setLogincard={setLogincard} setLogincards={setLogincards} />)}
-  // };
-
-  if (logincard) test = <Calendar logincard={logincard} setLogincard={setLogincard} />;
-  else test = <Home logincards={logincards} setLogincard={setLogincard} setLogincards={setLogincards} />;
+  // if (logincard) test = <Calendar logincard={logincard} setLogincard={setLogincard} />;
+  // else test = <Home logincards={logincards} setLogincard={setLogincard} setLogincards={setLogincards} />;
 
   return (
-    <div>
-      { firstTime === 'yes' ? (<FirstTime done={done} />) : test }
-    </div>
+    // <div>
+    //   { firstTime === 'yes' ? (<FirstTime done={done} />) : test }
+    // </div>
+    <Calendar logincard={logincards[0]} setLogincard={setLogincard} />
   )
 }
 

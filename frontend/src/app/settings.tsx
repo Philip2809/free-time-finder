@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
-import { EventsData } from "../utils/generatedInterfaces";
+import { EventsData } from "./helpers/generatedInterfaces";
 import { Event } from "../utils/interfaces";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
