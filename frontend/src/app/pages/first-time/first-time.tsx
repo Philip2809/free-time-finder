@@ -39,7 +39,6 @@ const FirstTime = (props: props) => {
       const regex = res.match(/(\$\.sc\.person\.id)([ ]?=[ ]?)([0-9]+)(;)/);
       if (regex) {
         const personId = +regex[3];
-        console.log(personId);
         const myFirstCard: LoginCardData = {
           key: 0,
           name: 'Profil 1',

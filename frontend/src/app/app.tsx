@@ -1,7 +1,7 @@
 import { CircularProgress } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Event } from "../utils/interfaces";
-import Calendar from "./calendar";
+import Calendar from "./pages/calendar";
 import { LoginCardData } from "./helpers/interfaces";
 import FirstTime from "./pages/first-time";
 import Home from "./pages/home";
@@ -10,7 +10,7 @@ import './style.css'
 
 
 
-
+let test;
 
 
 const App = () => {
@@ -31,9 +31,16 @@ const App = () => {
     localStorage.setItem('logincards', JSON.stringify(logincards));
   } , [logincards]);
 
+  // const test = () => {
+  //   { logincard ? ( <h1>hej</h1> ) : (<Home logincards={logincards} setLogincard={setLogincard} setLogincards={setLogincards} />)}
+  // };
+
+  if (logincard) test = <Calendar logincard={logincard} setLogincard={setLogincard} />;
+  else test = <Home logincards={logincards} setLogincard={setLogincard} setLogincards={setLogincards} />;
+
   return (
     <div>
-      { firstTime === 'yes' ? (<FirstTime done={done} />) : (<Home logincards={logincards} setLogincard={setLogincard} setLogincards={setLogincards} />) }
+      { firstTime === 'yes' ? (<FirstTime done={done} />) : test }
     </div>
   )
 }

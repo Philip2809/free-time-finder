@@ -8,7 +8,7 @@ import styles from './edit-card-modal.module.scss';
 
 interface props {
   card: LoginCardData;
-  close: (card: LoginCardData) => void;
+  close: (card: LoginCardData | number) => void;
 }
 
 const style = {
@@ -28,11 +28,6 @@ const EditCardModal = (props: props) => {
 
   const handleClose = (event?: any, reason?: string) => {
     if (reason && ['backdropClick', 'escapeKeyDown'].includes(reason)) return;
-    // const logincard: LoginCardData = {
-    //   name: nameRef.current?.value || props.card.name,
-    //   personid: personidRef.current?.value || props.card.personid,
-    // };
-    // props.closeModal();
   }
 
   const [name, setName] = useState<string>('');
@@ -48,7 +43,6 @@ const EditCardModal = (props: props) => {
   const [authError, setAuthError] = useState<boolean>(false);
 
   const updateTeacherList = () => {
-    console.log('updateTeacherList');
     const options = teachers.map(e => {
       return { value: e.id, label: e.name };
     })
@@ -58,7 +52,6 @@ const EditCardModal = (props: props) => {
   useEffect(() => {
     if (auth.length < 5) return;
     const checkAuth = async () => {
-      console.log('checkAuth', auth);
       setAuthDisabled(true);
       setAuthError(false);
       const res = await checkAuthCookie(auth);
@@ -82,7 +75,6 @@ const EditCardModal = (props: props) => {
 
   useEffect(() => {
     updateTeacherList();
-    console.log('teachers', teachers, teacherids);
     setSelectedOption(teachers.filter(e => teacherids.includes(e.id)).map(e => {
       return { value: e.id, label: e.name };
     }));
@@ -90,7 +82,6 @@ const EditCardModal = (props: props) => {
   } , [teachers]);
 
   useEffect(() => {
-    console.log('selectedOption', selectedOption);
     setTeacherids(selectedOption.map(e => e.value));
   } , [selectedOption]);
 
@@ -103,12 +94,15 @@ const EditCardModal = (props: props) => {
   }, []);
 
   const handleSave = () => {
-    console.log('handleSave', name, auth, personid, teachers, selectedOption);
     const logincard: LoginCardData = {
       key: props.card.key,
       name, personid, auth, teachers, teacherids,
     };
     props.close(logincard);
+  };
+
+  const handleRemove = () => {
+    props.close(props.card.key);
   };
 
   const handleSelectChange = (sel: any) => {
@@ -142,10 +136,11 @@ const EditCardModal = (props: props) => {
               label=".SCFORMSAUTH"
               disabled={authDisabled}
               error={authError}
-              color={authDisabled ? 'primary' : (authError ? 'error' : 'success')}
+              color={personid === 0 ? 'primary' : (authError ? 'error' : 'success')}
               focused={true}
-              helperText={authError ? 'Ogiltig eller utgånget SCFORMSAUTH, vänligen hämta en ny från elevcentalen.' : ''}
+              helperText={authError ? 'Ogiltig eller utgånget SCFORMSAUTH, vänligen hämta en ny från elevcentalen.' : (personid === 0 ? 'Vänligen hämta SCFORMSAUTH från elevcentalen.' : '')}
               value={auth}
+              autoComplete="off"
               onChange={(e) => setAuth(e.target.value)} />
   
             <TextField 
@@ -171,7 +166,7 @@ const EditCardModal = (props: props) => {
 
             <hr />
             <Button sx={{ float: 'right' }} onClick={handleSave}>Spara</Button>
-            <Button sx={{ float: 'left' }} color='error' onClick={handleClose}>Ta bort</Button>
+            <Button sx={{ float: 'left' }} color='error' onClick={handleRemove}>Ta bort</Button>
 
           </Box>
         </Fade>

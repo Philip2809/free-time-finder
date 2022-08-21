@@ -4,6 +4,7 @@ import { MdAdd } from "react-icons/md";
 import EditCardModal from "../../components/edit-card-modal";
 import Logincard from "../../components/logincard";
 import { LoginCardData } from "../../helpers/interfaces";
+import { randint } from "../../helpers/utilities";
 import styles from './home.module.scss';
 
 interface props {
@@ -25,21 +26,44 @@ const Home = (props: props) => {
 
   const handleEditClick = (card: LoginCardData) => {
     setEditCard(card);
-    console.log('edit click', card);
   }
 
   const handleCardClick = (card: LoginCardData) => {
-    console.log('card click', card);
+    props.setLogincard(card);
   }
 
-  const handleEditDone = (card: LoginCardData) => {
-    console.log('edit done', card);
+  const handleAddCard = () => {
+    const newCard: LoginCardData = {
+      key: randint(1, 100000000000000000),
+      name: 'Ny profil',
+      auth: '',
+      personid: 0,
+      teacherids: [],
+      teachers: [],
+    };
+    setEditCard(newCard);
+  };
+
+  const handleEditDone = (card: LoginCardData | number) => {
     setEditCard(null);
-    const newLogincards = props.logincards.map(e => {
-      if (e.key === card.key) return card;
-      return e;
-    });
-    props.setLogincards(newLogincards);
+    if (typeof card === 'number') {
+      const newLogincards = props.logincards.filter((n) => n.key !== card);
+      props.setLogincards(newLogincards);
+      return;
+    }
+    if (props.logincards.length) {
+      const allKeys = props.logincards.map((n) => n.key);
+      if (allKeys.includes(card.key)) {
+        const newLogincards = props.logincards.map((n) => {
+          if (n.key === card.key) return card;
+          return n;
+        });
+        props.setLogincards(newLogincards);
+      } else {
+        const newLogincards = [...props.logincards, card];
+        props.setLogincards(newLogincards);
+      }
+    } else props.setLogincards([card]);
   };
 
 
@@ -47,7 +71,7 @@ const Home = (props: props) => {
     <div className={styles.body}>
       
       <div className={styles.addBtn}>
-      <Button variant="contained" color='success' endIcon={<MdAdd />}>
+      <Button variant="contained" color='success' onClick={handleAddCard} endIcon={<MdAdd />}>
         Lägg till profil
       </Button>
       </div>

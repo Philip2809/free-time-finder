@@ -14,7 +14,8 @@ interface props {
 }
 
 const sx = {
-  '&': { boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px', width: '40%', margin: '0.5%' },
+  '&': { boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px', resize: 'both', width: '23vw',  margin: '0.5%', height: 'fit-content' },
+  '.MuiButtonBase-root': { height: 'inherit' },
 }
 
 let timer = 0;
@@ -58,6 +59,7 @@ const LoginCard = (props: props) => {
                       return <Chip 
                                 key={n}
                                 color='error'
+                                title={teacher?.name}
                                 label={teacher?.name}
                                 className={styles.chip} />;
                     }) }
