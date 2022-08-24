@@ -9,9 +9,10 @@ interface props {
 const CustomMonthView = (rootProps: props) => {
 
   const CustomTimeTableCell = (props: MonthView.TimeTableCellProps) => {
+    console.log(props);
     const dblClick = () => {
       console.log('doubleclick', props);
-      rootProps.setViewName('Week')
+      rootProps.setViewName('Day');
       rootProps.setViewDate(props.startDate);
     }
     

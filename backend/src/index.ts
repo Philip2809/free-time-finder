@@ -11,16 +11,6 @@ const port = 5000;
 app.use(express.json());
 app.use(cors())
 
-
-app.post('/api/getLessons/:authcookie', async (req: Request, res: Response) => {
-  const authcookie = req.params.authcookie;
-  const headers = {
-    Cookie: `.SCFORMSAUTH=${authcookie}`
-  }
-  const bookingResponse = await axios.post('https://elevcentralen.se/Booking/Home/Data', req.body, { headers });
-  res.send(bookingResponse.data);
-});
-
 app.get('/check-cookie/:authcookie', async (req: Request, res: Response) => {
   const authcookie = req.params.authcookie;
   const headers = {

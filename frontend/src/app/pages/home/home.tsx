@@ -4,7 +4,7 @@ import { MdAdd } from "react-icons/md";
 import EditCardModal from "../../components/edit-card-modal";
 import Logincard from "../../components/logincard";
 import { LoginCardData } from "../../helpers/interfaces";
-import { randint } from "../../helpers/utilities";
+import { checkAuthCookie, randint } from "../../helpers/utilities";
 import styles from './home.module.scss';
 
 interface props {
@@ -28,13 +28,15 @@ const Home = (props: props) => {
     setEditCard(card);
   }
 
-  const handleCardClick = (card: LoginCardData) => {
-    props.setLogincard(card);
+  const handleCardClick = async (card: LoginCardData) => {
+    const res = await checkAuthCookie(card.auth);
+    if (res) props.setLogincard(card);
+    else setEditCard(card);
   }
 
   const handleAddCard = () => {
     const newCard: LoginCardData = {
-      key: randint(1, 100000000000000000),
+      key: randint(1, Math.max()),
       name: 'Ny profil',
       auth: '',
       personid: 0,

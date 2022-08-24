@@ -1,6 +1,8 @@
 import axios from "axios";
 import { Employee, EventsData, Item } from "./generatedInterfaces";
 import { LoginCardData, Teacher, TeacherGroup } from "./interfaces";
+import { AppointmentModel } from "@devexpress/dx-react-scheduler";
+
 
 export function checkAuthCookie(cookie: string) {
   return new Promise<boolean | string>((resolve) => {
@@ -68,10 +70,29 @@ export function getGroupings(lessons: Item[]) {
   return gorupings;
 }
 
+const randomNum = randint(235234, 4785379875438);
+
 function decimalToRgbString(d: number) {
-  return "#" + ((d) >>> 0).toString(16).slice(-6);
+  const color = "#" + ((d) >>> 0).toString(16).slice(-6);
+  if (color.length === 7) return color;
+  return color + "0".repeat(7 - color.length);
 }
 
 function getColorBasedOnTeacher(teacher: Employee) {
-  return decimalToRgbString(teacher.id * randint(235234, 4785379875438) * parseInt((teacher.signature[0] || 'A'), 36));
-} 
+  return decimalToRgbString(teacher.id * randomNum * parseInt((teacher.signature[0] || 'A'), 36));
+}
+
+export function getAppointments(lessons: Item[]) {
+  const appointments: AppointmentModel[] = [];
+  lessons.forEach(lesson => {
+    const teacher = lesson.employees[0];
+    if (!teacher) return;
+    appointments.push({
+      startDate: lesson.start,
+      endDate: lesson.end,
+      teacher: teacher.id,
+      title: lesson.title,
+    })
+  });
+  return appointments;
+}
