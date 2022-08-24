@@ -17,15 +17,18 @@ const CustomMonthView = (rootProps: props) => {
     }
     
     return (
-      <MonthView.TimeTableCell {...props} onDoubleClick={dblClick} />
+        <MonthView.TimeTableCell {...props} onDoubleClick={dblClick} />
     )
   };
 
+  const filterAppointments = (timeTableAppointments: any, currentView: any) => {
+    console.log(timeTableAppointments);
+  }  
+
   return (
-    <MonthView 
+    <MonthView
       timeTableCellComponent={CustomTimeTableCell}
-      displayName={rootProps.displayName}
-    />
+      displayName={rootProps.displayName} />
   )
 }
 

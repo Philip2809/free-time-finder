@@ -1,6 +1,7 @@
 import { Card, CardActionArea, CardContent, Typography, Chip } from "@mui/material";
 import { useEffect, useState } from "react";
 import { MdEdit } from 'react-icons/md';
+import { BsFillCalendar2EventFill } from 'react-icons/bs';
 import { LoginCardData } from "../../helpers/interfaces";
 import styles from './logincard.module.scss';
 
@@ -18,30 +19,30 @@ const sx = {
   '.MuiButtonBase-root': { height: 'inherit' },
 }
 
-let timer = 0;
-
 const LoginCard = (props: props) => {
 
-  const cardmousedown = () => {
-    timer = setTimeout(() => {
-      props.handleCardClick(props.card);
-    }, 450);
+  const calendarClick = () => {
+    props.handleCardClick(props.card);
   }
-
-  const cardmouseup = () => {
-    clearTimeout(timer);
-  }
-
   const editclick = () => {
     props.handleEditClick(props.card);
   }
 
   return (
-      <Card sx={sx} onMouseDown={cardmousedown} onMouseUp={cardmouseup}>
+      <Card sx={sx}>
       <CardActionArea>
         <CardContent>
           <Typography gutterBottom variant="h5" component="div" sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>{ props.addCard ? props.addCardTitle : props.card.name }</span> { props.addCard ? null : <MdEdit className={styles.editbtn} onClick={editclick} /> }
+            <span>{ props.addCard ? props.addCardTitle : props.card.name }</span>
+            { 
+              props.addCard ? null : 
+              (
+                <div>
+                  <BsFillCalendar2EventFill className={styles.editbtn} onClick={calendarClick} />
+                  <MdEdit className={styles.editbtn} onClick={editclick} />
+                </div>
+              )
+            }
           </Typography>
 
             { 

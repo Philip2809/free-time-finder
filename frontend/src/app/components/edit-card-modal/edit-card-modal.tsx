@@ -138,7 +138,7 @@ const EditCardModal = (props: props) => {
               error={authError}
               color={personid === 0 ? 'primary' : (authError ? 'error' : 'success')}
               focused={true}
-              helperText={authError ? 'Ogiltig eller utgånget SCFORMSAUTH, vänligen hämta en ny från elevcentalen.' : (personid === 0 ? 'Vänligen hämta SCFORMSAUTH från elevcentalen.' : '')}
+              helperText={authError ? 'Ogiltig eller utgånget SCFORMSAUTH, vänligen hämta en ny från elevcentalen. Om du kommit hit efter att ha försökt gå in på kalendern så betyder det att din SCFORMSAUTH har gått ut, hämta en ny!' : (personid === 0 ? 'Vänligen hämta SCFORMSAUTH från elevcentalen.' : '')}
               value={auth}
               autoComplete="off"
               onChange={(e) => setAuth(e.target.value)} />

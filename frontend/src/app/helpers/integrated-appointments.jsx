@@ -109,6 +109,7 @@ const filterAppointments = ({ timeTableAppointments, currentView }) => {
   if (currentView.type !== "month") {
     return timeTableAppointments;
   }
+  console.log('alma',timeTableAppointments);
   const sortedAppointments = timeTableAppointments.map(sortAppointments);
   const groupedAppointments = sortedAppointments.map(sortedGroup =>
     findOverlappingAppointments(sortedGroup, true)
@@ -116,9 +117,19 @@ const filterAppointments = ({ timeTableAppointments, currentView }) => {
   const adjustedAppointments = groupedAppointments.map(group =>
     adjustAppointments(group, true)
   );
-  const filteredAppointments = adjustedAppointments.map(appointments =>
-    appointments.filter(appointment => appointment.offset < 3)
-  );
+  const filteredAppointments = adjustedAppointments.map(appointments => {
+    const filtered = appointments.filter((appointment, i) => {
+      if (appointment.offset === 2) {
+        appointment.dataItem.title = appointment.dataItem.title + ' och 4 till';
+        return false;
+      } else if (appointment.offset < 3) return false;
+      return false;
+    });
+    console.log('alma 3',filtered, appointments);
+    return appointments.filter(appointment => appointment.offset < 3)
+  });
+  
+  console.log('alma 2',filteredAppointments, adjustedAppointments, groupedAppointments);
 
   return filteredAppointments.map(appointmentGroup =>
     appointmentGroup.map(({ offset, ...restProps }) => ({ ...restProps }))

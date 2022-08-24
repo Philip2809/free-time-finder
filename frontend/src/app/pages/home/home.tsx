@@ -1,4 +1,4 @@
-import { Card, CardActionArea, CardMedia, CardContent, Typography, Button } from "@mui/material";
+import { Card, CardActionArea, CardMedia, CardContent, Typography, Button, Backdrop, CircularProgress } from "@mui/material";
 import { useEffect, useState } from "react";
 import { MdAdd } from "react-icons/md";
 import EditCardModal from "../../components/edit-card-modal";
@@ -21,15 +21,17 @@ const sx = {
 }
 
 const Home = (props: props) => {
-  const [editMode, setEditMode] = useState<boolean>(true);
   const [editCard, setEditCard] = useState<LoginCardData | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleEditClick = (card: LoginCardData) => {
     setEditCard(card);
   }
 
   const handleCardClick = async (card: LoginCardData) => {
+    setLoading(true);
     const res = await checkAuthCookie(card.auth);
+    setLoading(false);
     if (res) props.setLogincard(card);
     else setEditCard(card);
   }
@@ -71,6 +73,12 @@ const Home = (props: props) => {
 
   return (
     <div className={styles.body}>
+
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
       
       <div className={styles.addBtn}>
       <Button variant="contained" color='success' onClick={handleAddCard} endIcon={<MdAdd />}>

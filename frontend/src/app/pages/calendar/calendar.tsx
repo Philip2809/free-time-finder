@@ -16,7 +16,7 @@ import {
   GroupingPanel,
   AppointmentTooltip,
 } from '@devexpress/dx-react-scheduler-material-ui';
-import { AppointmentModel, GroupingState, IntegratedGrouping, ViewState } from "@devexpress/dx-react-scheduler";
+import { AppointmentMeta, AppointmentModel, GroupingState, IntegratedGrouping, ViewState } from "@devexpress/dx-react-scheduler";
 import { Backdrop, CircularProgress, Paper } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import CustomMonthView from "../../components/custom-calendar/month-view";
@@ -30,14 +30,7 @@ interface props {
   setLogincard: (logincard: LoginCardData) => void;
 }
 
-const data: AppointmentModel[] = [
-  // {
-  //   title: 'Website Re-Design Plan',
-  //   startDate: new Date('2022-08-22 11:30'),
-  //   endDate: new Date('2022-08-22 13:30'),
-  //   teacher: 2,
-  // }
-]
+let test: any;
 
 let alreadyLoading = false;
 
@@ -138,15 +131,11 @@ const Calendar = (props: props) => {
             onCurrentViewNameChange={setViewName} />
 
           
-          {/* { grouping ? <GroupingState grouping={[{ resourceName: 'teacher' }]} groupByDate={() => {return true}} /> : null} */}
           <GroupingState grouping={[{ resourceName: 'teacher' }]} groupByDate={() => {return true}} /> 
-
-
 
           <DayView displayName="Dag" startDayHour={earliestTime} endDayHour={latestTime} />
           <WeekView displayName="Vecka" startDayHour={earliestTime} endDayHour={latestTime} />
           <CustomMonthView displayName="Månad" setViewDate={setViewDate} setViewName={setViewName} />
-
 
           <Toolbar />
           <ViewSwitcher />
@@ -155,28 +144,27 @@ const Calendar = (props: props) => {
           <Appointments />
           <AppointmentTooltip
             showCloseButton
+            onVisibilityChange={(visible) => {
+              if (!visible) {
+                test.data.title = 'test';
+              }
+            }}
+            onAppointmentMetaChange={(meta) => {
+              const res = meta.data.title?.match(/(och \d+ till$)/);
+              console.log(meta, res);
+              if (res != null && meta.data.title) {
+                test = meta.data.title;
+                meta.data.title.replace('och ', '');
+              }
+              test = meta;
+            }}
           />
           <CurrentTimeIndicator shadePreviousAppointments={true} shadePreviousCells={true} />
 
-          {/* { grouping ? <Resources data={grouping} mainResourceName='teacher' /> : null}
-          { grouping ? <IntegratedGrouping /> : null}
-          { grouping ? <GroupingPanel /> : null} */}
-
-
-<Resources data={grouping} mainResourceName='teacher' /> 
-
-{ grouping[0].instances.length && viewName !== 'Month' ? <IntegratedGrouping /> : null }
-{ grouping[0].instances.length && viewName !== 'Month' ? <GroupingPanel /> : null }
-
-{/* <IntegratedGrouping /> */}
-{/* <GroupingPanel /> */}
-
-          {/* <GroupingState grouping={[{ resourceName: 'teacher' }]} groupByDate={() => {return true}} />
-          <Resources data={grouping} mainResourceName='teacher' />
-          <IntegratedGrouping />
-          <GroupingPanel /> */}
-
-<IntegratedAppointments />
+          <Resources data={grouping} mainResourceName='teacher' /> 
+          { grouping[0].instances.length && viewName !== 'Month' ? <IntegratedGrouping /> : null }
+          { grouping[0].instances.length && viewName !== 'Month' ? <GroupingPanel /> : null }
+          <IntegratedAppointments />
 
         </Scheduler>
 
