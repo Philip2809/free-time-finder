@@ -2,11 +2,12 @@ import axios from "axios";
 import { Employee, EventsData, Item } from "./generatedInterfaces";
 import { LoginCardData, Teacher, TeacherGroup } from "./interfaces";
 import { AppointmentModel } from "@devexpress/dx-react-scheduler";
+import { environment } from "./environment";
 
 
 export function checkAuthCookie(cookie: string) {
   return new Promise<boolean | string>((resolve) => {
-    axios.get(`http://localhost:5000/check-cookie/${cookie}`).then(res => {
+    axios.get(`${environment.apiUrl}/check-cookie/${cookie || 'NO-COOKIE'}`).then(res => {
       if (/(\$\.sc\.person\.id)([ ]?=[ ]?)([0-9]+;)/.test(res.data)) resolve(res.data);
       else resolve(false);
     });
@@ -15,7 +16,7 @@ export function checkAuthCookie(cookie: string) {
 
 export function getLessons(card: LoginCardData, start: number, end: number) {
   return new Promise<EventsData>((resolve) => {
-    const url = 'http://localhost:5000/lessons'
+    const url = `${environment.apiUrl}/lessons`
       + '?auth=' + card.auth
       + '&personId=' + card.personid
       + '&start=' + start

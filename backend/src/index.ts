@@ -1,12 +1,11 @@
 import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
 import axios from 'axios';
-// import dotenv from 'dotenv';
-
-// dotenv.config();
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app: Express = express();
-const port = 5000;
+const port = process.env.PORT;
 
 app.use(express.json());
 app.use(cors())
@@ -51,8 +50,6 @@ app.get('/lessons', async (req: Request, res: Response) => {
 
   res.status(200).send(bookingResponse.data);
 });
-
-app.use('/', express.static('frontend-build'));
 
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);

@@ -33,6 +33,7 @@ specifiers:
   typescript: ^4.7.3
   uuid: ^8.3.2
   vite: ^2.9.9
+  vite-plugin-filter-replace: ^0.1.9
 
 dependencies:
   '@babel/core': 7.18.2
@@ -61,6 +62,7 @@ dependencies:
   react-icons: 4.4.0_react@18.1.0
   react-select: 5.4.0_oo3emjpi3bbjzqzdmt4yuasdq4
   uuid: 8.3.2
+  vite-plugin-filter-replace: 0.1.9
 
 devDependencies:
   '@types/react': 18.0.12
@@ -1822,8 +1824,8 @@ packages:
       react: 18.1.0
     dev: false
 
-  /rollup/2.75.6:
-    resolution: {integrity: sha512-OEf0TgpC9vU6WGROJIk1JA3LR5vk/yvqlzxqdrE2CzzXnqKXNzbAwlWUXis8RS3ZPe7LAq+YUxsRa0l3r27MLA==}
+  /rollup/2.78.1:
+    resolution: {integrity: sha512-VeeCgtGi4P+o9hIg+xz4qQpRl6R401LWEXBmxYKOV4zlF82lyhgh2hTZnheFUbANE8l2A41F458iwj2vEYaXJg==}
     engines: {node: '>=10.0.0'}
     hasBin: true
     optionalDependencies:
@@ -1917,6 +1919,10 @@ packages:
     hasBin: true
     dev: false
 
+  /vite-plugin-filter-replace/0.1.9:
+    resolution: {integrity: sha512-uMSDbItT78QsXM2fPdQjy43eiXoS5JBq81yziekBg3FPtgJvBDhnyo/i1ZaI7M8FLsXOmaeVzH5bjNsvcZ08Sg==}
+    dev: false
+
   /vite/2.9.12_sass@1.52.3:
     resolution: {integrity: sha512-suxC36dQo9Rq1qMB2qiRorNJtJAdxguu5TMvBHOc/F370KvqAe9t48vYp+/TbPKRNrMh/J55tOUmkuIqstZaew==}
     engines: {node: '>=12.2.0'}
@@ -1936,7 +1942,7 @@ packages:
       esbuild: 0.14.43
       postcss: 8.4.14
       resolve: 1.22.0
-      rollup: 2.75.6
+      rollup: 2.78.1
       sass: 1.52.3
     optionalDependencies:
       fsevents: 2.3.2

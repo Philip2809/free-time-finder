@@ -2,9 +2,8 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import filterReplace from 'vite-plugin-filter-replace';
 
-const apiUrl = 'http://localhost:5000';
+const apiUrl = 'https://api.phma.dev/ftf';
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     filterReplace([
