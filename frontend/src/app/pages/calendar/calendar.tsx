@@ -22,21 +22,31 @@ import { useEffect, useRef, useState } from "react";
 import CustomMonthView from "../../components/custom-calendar/month-view";
 import { getAppointments, getGroupings, getLessons, randint } from "../../helpers/utilities";
 import moment from "moment";
+import { ImExit } from 'react-icons/im';
 import { Item } from "../../helpers/generatedInterfaces";
 // @ts-ignore
 import { IntegratedAppointments } from "../../helpers/integrated-appointments";
 interface props {
   logincard: LoginCardData;
-  setLogincard: (logincard: LoginCardData) => void;
+  setLogincard: (logincard: LoginCardData | null) => void;
 }
 
-let test: any;
+let appointmentMetaHowMany: AppointmentMeta | undefined;
 
 let alreadyLoading = false;
+const tempTeacherGroup =  [{
+  fieldName: 'teacher',
+  instances: [
+    {
+      text: ' ',
+      id: 1,
+    }
+  ]
+}]
 
 const Calendar = (props: props) => {
 
-  const [viewName, setViewName] = useState<string>('Day');
+  const [viewName, setViewName] = useState<string>('Week');
   const [viewDate, setViewDate] = useState<Date>(new Date());
 
   const [earliestTime, setEarliestTime] = useState<number>(0);
@@ -45,17 +55,7 @@ const Calendar = (props: props) => {
   const [events, setEvents] = useState<Item[]>([]);
   const [appointments, setAppointments] = useState<AppointmentModel[]>([]);
 
-  const [grouping, setGrouping] = useState<any>(
-    [{
-      fieldName: 'teacher',
-      instances: [
-        {
-          text: 'Teacher 1',
-          id: 1,
-        }
-      ]
-    }]
-  );
+  const [grouping, setGrouping] = useState<any>(tempTeacherGroup);
 
   const [loading, setLoading] = useState<boolean>(false);
   
@@ -64,6 +64,7 @@ const Calendar = (props: props) => {
     const downloadLessons = async () => {
       setLoading(true);
       alreadyLoading = true;
+      setGrouping(tempTeacherGroup);
 
       if (viewName === 'Day') {
         const data = await getLessons(props.logincard, new Date(viewDate).setHours(0, 0, 0, 0), new Date(viewDate).setHours(24, 0, 0, 0));
@@ -91,10 +92,6 @@ const Calendar = (props: props) => {
   } , [viewDate, viewName]);
 
   useEffect(() => {
-    events.forEach(item => {
-      console.log(item.start, item.employees[0].name);
-    });
-
     const groups = getGroupings(events);
     setGrouping([{
       fieldName: 'teacher',
@@ -103,8 +100,6 @@ const Calendar = (props: props) => {
 
     const appointments = getAppointments(events);
     setAppointments(appointments);
-
-
   }, [events])
 
 
@@ -140,23 +135,32 @@ const Calendar = (props: props) => {
           <Toolbar />
           <ViewSwitcher />
           <DateNavigator />
-          <TodayButton />
+          <TodayButton messages={{ today: 'Idag' }} buttonComponent={(btnProps: TodayButton.ButtonProps) => {
+
+            return (
+              <>
+                <ImExit className={styles.backBtn} onClick={ () => {
+                  props.setLogincard(null)
+                } } />
+                <TodayButton.Button {...btnProps} />
+              </>
+            )
+
+          }} />
           <Appointments />
           <AppointmentTooltip
             showCloseButton
             onVisibilityChange={(visible) => {
-              if (!visible) {
-                test.data.title = 'test';
+              if (!visible && appointmentMetaHowMany) {
+                appointmentMetaHowMany.data.title = appointmentMetaHowMany.data.oldTitle;
               }
             }}
             onAppointmentMetaChange={(meta) => {
-              const res = meta.data.title?.match(/(och \d+ till$)/);
-              console.log(meta, res);
-              if (res != null && meta.data.title) {
-                test = meta.data.title;
-                meta.data.title.replace('och ', '');
+              if (meta.data?.title) {
+                meta.data.oldTitle = meta.data.title;
+                meta.data.title = meta.data.title?.replace(/(och \d+ till$)/, '');
               }
-              test = meta;
+              appointmentMetaHowMany = meta;
             }}
           />
           <CurrentTimeIndicator shadePreviousAppointments={true} shadePreviousCells={true} />

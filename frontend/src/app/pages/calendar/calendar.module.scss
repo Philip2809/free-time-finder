@@ -22,3 +22,14 @@
   pointer-events: none!important;
   z-index: 1000000;
 }
+
+.backBtn {
+  font-size: 1.8em;
+  margin-right: 0.5em;
+  color: #1976d2;
+}
+
+.backBtn:hover {
+  color: #12579c;
+  background-color: rgba(25, 118, 210, 0.04);
+}

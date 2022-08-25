@@ -9,21 +9,15 @@ interface props {
 const CustomMonthView = (rootProps: props) => {
 
   const CustomTimeTableCell = (props: MonthView.TimeTableCellProps) => {
-    console.log(props);
     const dblClick = () => {
-      console.log('doubleclick', props);
-      rootProps.setViewName('Day');
       rootProps.setViewDate(props.startDate);
+      rootProps.setViewName('Day');
     }
     
     return (
         <MonthView.TimeTableCell {...props} onDoubleClick={dblClick} />
     )
   };
-
-  const filterAppointments = (timeTableAppointments: any, currentView: any) => {
-    console.log(timeTableAppointments);
-  }  
 
   return (
     <MonthView
