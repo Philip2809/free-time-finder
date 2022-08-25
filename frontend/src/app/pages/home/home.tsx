@@ -32,14 +32,14 @@ const Home = (props: props) => {
     setLoading(true);
     const res = await checkAuthCookie(card.auth);
     setLoading(false);
-    if (res) props.setLogincard(card);
+    if (res && card.teacherids.length) props.setLogincard(card);
     else setEditCard(card);
   }
 
   const handleAddCard = () => {
     const newCard: LoginCardData = {
-      key: randint(1, Math.max()),
-      name: 'Ny profil',
+      key: randint(1, 7847389578347535234224324324),
+      name: 'New profile',
       auth: '',
       personid: 0,
       teacherids: [],
@@ -57,6 +57,7 @@ const Home = (props: props) => {
     }
     if (props.logincards.length) {
       const allKeys = props.logincards.map((n) => n.key);
+      console.log(card);
       if (allKeys.includes(card.key)) {
         const newLogincards = props.logincards.map((n) => {
           if (n.key === card.key) return card;
@@ -82,20 +83,12 @@ const Home = (props: props) => {
       
       <div className={styles.addBtn}>
       <Button variant="contained" color='success' onClick={handleAddCard} endIcon={<MdAdd />}>
-        Lägg till profil
+        Add new profile
       </Button>
       </div>
 
       { editCard ? (<EditCardModal close={handleEditDone} card={editCard} />) : null }
 
-      {/* <Logincard 
-        addCard={true}
-        addCardText={'Lägg till Profil'}
-        addCardTitle={'Lägg till Profil'}
-        card={props.logincards[0]}
-        handleEditClick={handleEditClick}
-        handleCardClick={handleCardClick}
-      /> */}
       <div className={styles.loginCardHolder}>
       {props.logincards.map((e: LoginCardData) => {
         return (

@@ -4,6 +4,7 @@ import FaqQuestion from '../../components/faq-question';
 import { LoginCardData, Teacher } from '../../helpers/interfaces';
 import { checkAuthCookie } from '../../helpers/utilities';
 import styles from './first-time.module.scss';
+import { FaGithub, FaHome } from 'react-icons/fa';
 
 interface props {
   done: () => void;
@@ -41,7 +42,7 @@ const FirstTime = (props: props) => {
         const personId = +regex[3];
         const myFirstCard: LoginCardData = {
           key: 0,
-          name: 'Profil 1',
+          name: 'Profile 1',
           personid: personId,
           teacherids: [],
           auth: input,
@@ -60,20 +61,32 @@ const FirstTime = (props: props) => {
   return (
     <div className={styles.body}>
 
+      <div className={styles.linkIcons}>
+        <div className={styles.iconHolder}>
+          <FaHome className={styles.icon} id={styles.homeIcon} />
+          <FaGithub className={styles.icon} />
+        </div>
+      </div>
+
       <div className={styles.introBox}>
         <span id={styles.title}>Free Time Finder</span>
       </div>
 
       <div className={styles.introBox}>
-        Det verkar som att detta är första gången du är på sidan eller kanske du har rensat dina kakor? Oavsätt fall, behöver vi "omkonfigrera"
-        och till detta behövs att du loggar in på elevcentalen och och klistrar in ".SCFORMSAUTH" kakan nedanför.
+        It looks like this is you first time here, or you recently cleared you cookies? In any case, we need to add a new profile for you!
+        Please log onto <a href='https://elevcentralen.se' target='_blank'>elevcentralen.se</a> and paste the ".SCFORMSAUTH" cookie below.
+        <br />
+        <br />
+        <a href="">Where do I find the SCFORMSAUTH?</a>
+        <br />
+        Any Other questions? Please check out the <a href="">github</a> page!
       </div>
 
       <div className={styles.introBox}>
         <TextField 
           id="outlined-basic"
           label=".SCFORMSAUTH"
-          helperText={inputError ? 'Vänligen ange en giltig SCFORMSAUTH, läs "vanliga frågor" nedanför för att hitta hur man gör!' : ''}
+          helperText={inputError ? 'Please enter a valid SCFORMSAUTH, look above to find out how to do it!' : ''}
           error={inputError}
           variant="outlined"
           disabled={inputDisabled}
@@ -81,34 +94,27 @@ const FirstTime = (props: props) => {
           sx={sx}
           onInput={handleOnInput} />
       </div>
-
+{/* 
       <div className={styles.introBox} id={styles.faq}>
-       Vanliga frågor
+       FAQ
        <div id={styles.faqContent}>
        <br />
         <FaqQuestion 
-          question='Vad gör Free Time Finder?'
-          answer='Free Time Finder gör det lättare att hitta lediga körlektionstider som man annars hade behövt hitta genom Elevcentalen. 
-          Elevcentalens system är mycket dålig, då man endast kan se en lärare åt gången samt endast en mycket begränsad veckovy. 
-          OSB! Free Time Finder är endast gjort för att hitta en ledig tid, du måste själv gå in på elevcentalen för att boka den!'/>
+          question='What is Free Time Finder?'
+          answer='Free Time Finder makes it easier to find availible driving lessons by using a better interface than Elevcentralen. In Free Time Finder
+          you can select multiple teachers and see a day, week and month view of the available times. OSB! Free Time Finder is only made for finding
+          a free time, you have to go to Elevcentralen yourself to book it!'/>
 
         <br />
 
         <FaqQuestion 
-          question='Var hittar jag ".SCFORMSAUTH" kakan?'
-          answer='Det kan vara lite svårt att hitta kakan, därför finns det guider här hur man kan hitta de på olika enheter:
-          Dator, Mobil (länk)'/>
-
-        <br />
-
-        <FaqQuestion 
-          question='Är Free Time Finder säkert?'
-          answer='SCFORMSAUTH kakan gör just det den låter som, den autentiserar dig på Elevcentalen, detta är helt enkelt ett login för datorer.
-          För att säkerställa transparens för säkerhet så ligger all kod ute på github (länk) samt dokumentation om du själv vill köra projektet
-          på en egen dator. Alla data som laddas ner via Elevcentralen sparas endast på din dator, i localstorage. Det är därför du kanske ser 
-          denna sidan igen efter att du rensat dina kakor. '/>
+          question='Is Free Time Finder safe?'
+          answer='The SCFORMSAUTH cookie authenticates you at Elevcentralen and someone with this cookie and bad intent could do harm with it. For this 
+          reason this entire project is open source and you can run or build it yourself. You will find all the resources and guides on github. 
+          (link in the bottom right corner) '/>
+          <br />
        </div>
-      </div>
+      </div> */}
 
     </div>
   )

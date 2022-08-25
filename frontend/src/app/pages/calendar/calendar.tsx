@@ -115,7 +115,7 @@ const Calendar = (props: props) => {
       { // @ts-ignore // * So that I don't get errors when I use the component 
         <Scheduler
           height={'auto'}
-          locale="sv-SE"
+          locale="en-SE"
           firstDayOfWeek={1}
           data={appointments}>
 
@@ -128,14 +128,14 @@ const Calendar = (props: props) => {
           
           <GroupingState grouping={[{ resourceName: 'teacher' }]} groupByDate={() => {return true}} /> 
 
-          <DayView displayName="Dag" startDayHour={earliestTime} endDayHour={latestTime} />
-          <WeekView displayName="Vecka" startDayHour={earliestTime} endDayHour={latestTime} />
-          <CustomMonthView displayName="Månad" setViewDate={setViewDate} setViewName={setViewName} />
+          <DayView startDayHour={earliestTime} endDayHour={latestTime} />
+          <WeekView startDayHour={earliestTime} endDayHour={latestTime} />
+          <CustomMonthView setViewDate={setViewDate} setViewName={setViewName} />
 
           <Toolbar />
           <ViewSwitcher />
           <DateNavigator />
-          <TodayButton messages={{ today: 'Idag' }} buttonComponent={(btnProps: TodayButton.ButtonProps) => {
+          <TodayButton buttonComponent={(btnProps: TodayButton.ButtonProps) => {
 
             return (
               <>

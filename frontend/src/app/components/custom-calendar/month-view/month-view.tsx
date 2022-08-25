@@ -3,7 +3,6 @@ import { MonthView } from "@devexpress/dx-react-scheduler-material-ui";
 interface props {
   setViewName: (viewName: string) => void;
   setViewDate: (viewDate: Date) => void;
-  displayName: string;
 }
 
 const CustomMonthView = (rootProps: props) => {
@@ -21,8 +20,7 @@ const CustomMonthView = (rootProps: props) => {
 
   return (
     <MonthView
-      timeTableCellComponent={CustomTimeTableCell}
-      displayName={rootProps.displayName} />
+      timeTableCellComponent={CustomTimeTableCell} />
   )
 }
 

@@ -22,6 +22,7 @@
   // box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
   // border-radius: 10%;
   border-radius: 10px;
+  font-size: 1.2em;
 }
 
 #title {
@@ -29,26 +30,22 @@
   font-family: 'Georgia', cursive;
 }
 
-#faq {
-  font-size: 2rem;
-  font-family: 'Georgia', cursive;
-  height: 33px;
-  overflow: hidden;
-  transition: height 0.5s;
-  -webkit-transition: height 0.5s;
-  // transition: all 0.2s linear;
+.linkIcons {
+  position: absolute;
+  bottom: 1%;
+  right: 1%;
 }
 
-#faq:hover {
-  height: 1000px;
-  margin-bottom: 3%;
+.icon:hover {
+  color: white;
 }
 
-#faqContent {
-  display: none;
+.iconHolder {
+  font-size: 3em;
+  display: flex;
+  flex-direction: column;
 }
 
-#faq:hover #faqContent {
-  display: block;
+#homeIcon {
+  margin-bottom: 0.3em;
 }
-
