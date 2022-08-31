@@ -103,7 +103,7 @@ export const adjustAppointments = (groups, byDay = false) =>
       }
     }
     const nr3 = appointments.find(appointment => appointment.offset === 2);
-    if (nr3 && groupLength > 3) nr3.dataItem.title += ` och ${groupLength - 3} till`;
+    if (nr3 && groupLength > 3) nr3.dataItem.title += ` and ${groupLength - 3} more`;
     return [...acc, ...appointments];
   }, []);
 

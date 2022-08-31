@@ -94,28 +94,6 @@ const FirstTime = (props: props) => {
           sx={sx}
           onInput={handleOnInput} />
       </div>
-{/* 
-      <div className={styles.introBox} id={styles.faq}>
-       FAQ
-       <div id={styles.faqContent}>
-       <br />
-        <FaqQuestion 
-          question='What is Free Time Finder?'
-          answer='Free Time Finder makes it easier to find availible driving lessons by using a better interface than Elevcentralen. In Free Time Finder
-          you can select multiple teachers and see a day, week and month view of the available times. OSB! Free Time Finder is only made for finding
-          a free time, you have to go to Elevcentralen yourself to book it!'/>
-
-        <br />
-
-        <FaqQuestion 
-          question='Is Free Time Finder safe?'
-          answer='The SCFORMSAUTH cookie authenticates you at Elevcentralen and someone with this cookie and bad intent could do harm with it. For this 
-          reason this entire project is open source and you can run or build it yourself. You will find all the resources and guides on github. 
-          (link in the bottom right corner) '/>
-          <br />
-       </div>
-      </div> */}
-
     </div>
   )
 }

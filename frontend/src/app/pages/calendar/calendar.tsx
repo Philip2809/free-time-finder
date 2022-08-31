@@ -158,7 +158,7 @@ const Calendar = (props: props) => {
             onAppointmentMetaChange={(meta) => {
               if (meta.data?.title) {
                 meta.data.oldTitle = meta.data.title;
-                meta.data.title = meta.data.title?.replace(/(och \d+ till$)/, '');
+                meta.data.title = meta.data.title?.replace(/(and \d+ more$)/, '');
               }
               appointmentMetaHowMany = meta;
             }}

@@ -139,7 +139,7 @@ const EditCardModal = (props: props) => {
               error={authError}
               color={personid === 0 ? 'primary' : (authError ? 'error' : 'success')}
               focused={true}
-              helperText={authError ? 'Ogiltig eller utgånget SCFORMSAUTH, vänligen hämta en ny från elevcentalen. Om du kommit hit efter att ha försökt gå in på kalendern så betyder det att din SCFORMSAUTH har gått ut, hämta en ny!' : (personid === 0 ? 'Vänligen hämta SCFORMSAUTH från elevcentalen.' : '')}
+              helperText={authError ? 'Invalid or expired SCFORMSAUTH, please get a new one from elevcentralen! If you came here when trying to access the calendar, you SCFORMSAUTH has expired!' : (personid === 0 ? 'Please get SCFORMSAUTH from elevcentralen' : '')}
               value={auth}
               autoComplete="off"
               onChange={(e) => setAuth(e.target.value)} />
@@ -159,15 +159,15 @@ const EditCardModal = (props: props) => {
               isMulti
               isLoading={authDisabled}
               isDisabled={authDisabled}
-              placeholder='Välj lärare'
-              noOptionsMessage={() => 'Ingen lärare hittad!'}
+              placeholder='Choose teacher(s)'
+              noOptionsMessage={() => 'No teacher(s) found'}
               className={styles.teacherInput} />
 
             <br />
 
             <hr />
-            <Button sx={{ float: 'right' }} onClick={handleSave}>Spara</Button>
-            <Button sx={{ float: 'left' }} color='error' onClick={handleRemove}>Ta bort</Button>
+            <Button sx={{ float: 'right' }} onClick={handleSave}>Save</Button>
+            <Button sx={{ float: 'left' }} color='error' onClick={handleRemove}>Remove</Button>
 
           </Box>
         </Fade>
