@@ -102,7 +102,6 @@ const EditCardModal = (props: props) => {
   };
 
   const handleRemove = () => {
-    console.log(props.card);
     props.close(props.card.key);
   };
 

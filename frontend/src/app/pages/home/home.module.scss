@@ -20,3 +20,27 @@
   bottom: 1%;
   right: 1%
 }
+
+.linkIcons {
+  position: absolute;
+  bottom: 1%;
+  left: 1%;
+}
+
+.icon {
+  color: black;
+}
+
+.icon:hover {
+  color: white;
+}
+
+.iconHolder {
+  font-size: 3em;
+  display: flex;
+  flex-direction: column;
+}
+
+#homeIcon {
+  margin-bottom: 0.3em;
+}

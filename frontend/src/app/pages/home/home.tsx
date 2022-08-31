@@ -1,5 +1,6 @@
 import { Card, CardActionArea, CardMedia, CardContent, Typography, Button, Backdrop, CircularProgress } from "@mui/material";
 import { useEffect, useState } from "react";
+import { FaGithub, FaHome } from "react-icons/fa";
 import { MdAdd } from "react-icons/md";
 import EditCardModal from "../../components/edit-card-modal";
 import Logincard from "../../components/logincard";
@@ -57,7 +58,6 @@ const Home = (props: props) => {
     }
     if (props.logincards.length) {
       const allKeys = props.logincards.map((n) => n.key);
-      console.log(card);
       if (allKeys.includes(card.key)) {
         const newLogincards = props.logincards.map((n) => {
           if (n.key === card.key) return card;
@@ -74,6 +74,13 @@ const Home = (props: props) => {
 
   return (
     <div className={styles.body}>
+
+      <div className={styles.linkIcons}>
+        <div className={styles.iconHolder}>
+          <a href="https://phma.dev" target='_blank'><FaHome className={styles.icon} id={styles.homeIcon} /></a>
+          <a href="https://github.com/Philip2809/free-time-finder" target='_blank'><FaGithub className={styles.icon} /></a>
+        </div>
+      </div>
 
       <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}

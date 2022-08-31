@@ -23,7 +23,6 @@ const App = () => {
 
   useEffect(() => {
     localStorage.setItem('logincards', JSON.stringify(logincards));
-    console.log(logincards);
   } , [logincards]);
 
   if (logincard) CalendarOrHome = <Calendar logincard={logincard} setLogincard={setLogincard} />;

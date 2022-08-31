@@ -63,8 +63,8 @@ const FirstTime = (props: props) => {
 
       <div className={styles.linkIcons}>
         <div className={styles.iconHolder}>
-          <FaHome className={styles.icon} id={styles.homeIcon} />
-          <FaGithub className={styles.icon} />
+          <a href="https://phma.dev" target='_blank'><FaHome className={styles.icon} id={styles.homeIcon} /></a>
+          <a href="https://github.com/Philip2809/free-time-finder" target='_blank'><FaGithub className={styles.icon} /></a>
         </div>
       </div>
 
@@ -77,9 +77,9 @@ const FirstTime = (props: props) => {
         Please log onto <a href='https://elevcentralen.se' target='_blank'>elevcentralen.se</a> and paste the ".SCFORMSAUTH" cookie below.
         <br />
         <br />
-        <a href="">Where do I find the SCFORMSAUTH?</a>
+        <a href="https://github.com/Philip2809/free-time-finder/blob/master/guides/how%20to%20get%20SCFORMSAUTH.md" target='_blank'>Where do I find the SCFORMSAUTH?</a>
         <br />
-        Any Other questions? Please check out the <a href="">github</a> page!
+        Any Other questions? Please check out the <a href="https://github.com/Philip2809/free-time-finder" target='_blank'>github</a> page!
       </div>
 
       <div className={styles.introBox}>
