@@ -1,6 +1,8 @@
 # Free Time Finder
 A project I made because using elevcentralen to find a free driving lesson was a pain. In my case for elevcentalen I need to scroll through a list of teachers (every single employee at the company in Sweden) and then select one to book a lesson, their view only supports a week at a time and no calendar option. So I decided to do something better!
 
+If you have any questions or comments feel free to open a issue here on GitHub.
+
 # [Project site](https://ftf.phma.dev)
 
 Useful links:
